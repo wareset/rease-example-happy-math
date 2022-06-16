@@ -121,7 +121,7 @@ export default {
   </style>
 </head>
 
-<body>
+<body style="touch-action:pan-down;">
 <script>
 /* eslint-disable */
 ${code}
