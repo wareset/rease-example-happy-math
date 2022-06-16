@@ -58,7 +58,7 @@ export function AccordionItem(
         })
       )
     ),
-    _e8("div", { class: "accordion-collapse collapse show", "class--show": /*r1.$*/$show })(
+    _e8("div", { class: "accordion-collapse collapse", "class--show": /*r1.$*/$show })(
       _t3((nodeC[0] = context().node as any, '')),
       _e8("div", { class: "accordion-body p-0" })(
         _s10("body")(() => {

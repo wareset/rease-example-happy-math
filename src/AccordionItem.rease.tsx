@@ -1,5 +1,4 @@
 import type { TypeReaseContext } from 'rease'
-
 import { store, subscribe, context } from 'rease'
 
 const reflow = (element: HTMLElement): any => element.offsetHeight
@@ -54,7 +53,7 @@ export function AccordionItem(
       </button>
     </h2>
     <div
-      class="accordion-collapse collapse show"
+      class="accordion-collapse collapse"
       class--show={$show!!}
     >
       {(nodeC[0] = context().node as any, '')}
