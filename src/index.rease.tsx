@@ -12,7 +12,7 @@ import { SCHEMA } from './schema'
 import { random, max, round, assess } from './utils'
 
 // @ts-ignore
-import logo2 from './logo2.svg'
+import logo2 from '../static/logo2.svg'
 const logobg = `center / contain no-repeat url("data:image/svg+xml;utf8, ${logo2}") #3A6C51`
 
 import { AccordionItem } from './AccordionItem.rease'

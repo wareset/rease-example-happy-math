@@ -7,7 +7,6 @@ import {
   _ul as _ul21
 } from 'rease';
 import type { TypeReaseContext } from 'rease'
-
 import { store, subscribe, context } from 'rease'
 
 const reflow = (element: HTMLElement): any => element.offsetHeight

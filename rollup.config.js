@@ -10,7 +10,7 @@ import commonjs from '@rollup/plugin-commonjs'
 import resolve from '@rollup/plugin-node-resolve'
 // import livereload from 'rollup-plugin-livereload'
 
-const bs = fs.readFileSync(path.resolve('src/bootstrap.min.css'), 'utf8')
+const bs = fs.readFileSync(path.resolve('static/bootstrap.min.css'), 'utf8')
 
 const production = !process.env.ROLLUP_WATCH
 
