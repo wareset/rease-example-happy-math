@@ -356,7 +356,7 @@ export const SCHEMA = [
   head: string,
   tasks: {
     title: string, right: number, total: number,
-    last?: [string, string],
+    last?: [string, string] | null,
     errors: [string, string][],
     fn: () => [string, string]
   }[]
