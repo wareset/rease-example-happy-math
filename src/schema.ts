@@ -22,13 +22,14 @@ const fnSumOrDifFactory = (max: number) => (): [string, string] => {
   }
 }
 
+const _fixBrts = (n: number): number | string => n < 0 ? `(−${-n})` : n
 const fnSumOrDifFactoryAdv = (max: number) => (): [string, string] => {
   const n1 = randomTo(-max, max)
   const n2 = randomTo(-max, max)
   if (random() > 0.5) {
-    return [`${n1} + ${n2}`, (n1 + n2).toString()]
+    return [`${_fixBrts(n1)} + ${_fixBrts(n2)}`, (n1 + n2).toString()]
   } else {
-    return [`${n1} − ${n2}`, (n1 - n2).toString()]
+    return [`${_fixBrts(n1)} − ${_fixBrts(n2)}`, (n1 - n2).toString()]
   }
 }
 

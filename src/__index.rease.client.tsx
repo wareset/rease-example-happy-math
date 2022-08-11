@@ -8,7 +8,7 @@ import {
   _x as _x2,
   _c as _c7
 } from 'rease';
-import 'rease/jsx'
+
 // import * as rease from 'rease'
 // console.log(rease)
 
