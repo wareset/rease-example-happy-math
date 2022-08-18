@@ -6,7 +6,7 @@ import type { TypeReaseContext } from 'rease'
 
 import { createReaseApp } from 'rease'
 import { $innerWidth, $innerHeight } from 'rease'
-import { store, storablefySafeAllWithProxy } from 'rease'
+import { subject, subscribablefySafeAllWithProxy } from 'rease'
 
 import { SCHEMA } from './schema'
 import { random, max, round, assess } from './utils'
@@ -23,27 +23,28 @@ const READY = 'ОТВЕТИТЬ'
 function App(
   this: TypeReaseContext
 ): void {
-  const $ready = store<boolean>(false)
-  const $isRight = store<boolean>(false)
-  const $update = store<number>(1)
+  const $ready = subject<boolean>(false)
+  const $isRight = subject<boolean>(false)
+  const $update = subject<number>(1)
 
-  const $rights = store<number>(0)
-  const $totals = store<number>(0)
+  const $rights = subject<number>(0)
+  const $totals = subject<number>(0)
 
   let fn!: () => [string, string]
   let sample = '', answer = ''
-  const $sample = store<string>('')
-  const $result = store<string>('')
+  const $sample = subject<string>('')
+  const $result = subject<string>('')
 
   let classId = 0, taskId = 0
-  const $currentTask = store<boolean>(false)
+  const $currentTask = subject<boolean>(false)
 
-  const $isVertical = storablefySafeAllWithProxy([$innerWidth, $innerHeight], ([w, h]) => w < h)
+  const $isVertical =
+    subscribablefySafeAllWithProxy([$innerWidth, $innerHeight], ([w, h]) => w < h)
 
-  const $settingsTotal = store<number>(25)
-  const $settingsLastBadSample = store<boolean>(true)
-  const $showSettings = store<boolean>(false)
-  const $showFinalPopup = store<boolean>(false)
+  const $settingsTotal = subject<number>(15)
+  const $settingsLastBadSample = subject<boolean>(true)
+  const $showSettings = subject<boolean>(false)
+  const $showFinalPopup = subject<boolean>(false)
 
   ;(
     <div
@@ -198,12 +199,13 @@ function App(
                   setTimeout(() => {
                     if ($isRight.$ || !$settingsLastBadSample.$) {
                       const v = SCHEMA[classId].tasks[taskId]
+                      const lastAnswer = answer
                       ;[sample, answer] = v.last = fn()
+                      if (answer === lastAnswer) [sample, answer] = v.last = fn()
                       $sample.$ = sample
-                      $result.$ = ''
-
-                      if (v.total >= $settingsTotal.$) $showFinalPopup.$ = true
                     }
+                    $result.$ = ''
+                    if (v.total >= $settingsTotal.$) $showFinalPopup.$ = true
                     $ready.$ = false
                   }, 375)
                 }
@@ -305,7 +307,7 @@ function App(
                 id="settings-input"
                 value={$settingsTotal!!}
                 placeholder="не менее 10"
-                r-on-change={(e: any) => { $settingsTotal.$ = max(10, round(+e.target.value || 0)) }}
+                r-on-change={(e: any) => { $settingsTotal.$ = max(5, round(+e.target.value || 0)) }}
               />
             </div>
             <div class="form-check form-switch pt-3">

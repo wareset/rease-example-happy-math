@@ -1,3 +1,13 @@
+/* eslint-disable */
+// @ts-nocheck
+/* eslint-disable @typescript-eslint/explicit-function-return-type */
+import {
+  _t as _t3,
+  _s as _s10,
+  _e as _e8,
+  _$ as _$1,
+  _ul as _ul20
+} from 'rease';
 import type { TypeReaseContext } from 'rease'
 import { subject, subscribe, context } from 'rease'
 
@@ -41,25 +51,22 @@ export function AccordionItem(
     }
   }, [this, [$show.$], nodeC, [null] as [Function | null]])
 
-  ;(<div class="accordion-item">
-    <h2 class="accordion-header">
-      <button type="button"
-        class="accordion-button"
-        class--collapsed={!$show!!}
-        aria-expanded="true"
-        r-on-click-prevent={() => { $show.$ = !$show.$ }}
-      >
-        <r-slot r-is="head">head</r-slot>
-      </button>
-    </h2>
-    <div
-      class="accordion-collapse collapse"
-      class--show={$show!!}
-    >
-      {(nodeC[0] = context()!.node as any, '')}
-      <div class="accordion-body p-0">
-        <r-slot r-is="body">body</r-slot>
-      </div>
-    </div>
-  </div>)
+  ;(  _e8("div", { class: "accordion-item" })(
+    _e8("h2", { class: "accordion-header" })(
+      _e8("button", { type: "button", class: "accordion-button", "class--collapsed": /*r2.$*/_$1([$show], (_$0) => (!_$0[0])), "aria-expanded": "true" }, [_ul20('click-prevent', () => { $show.$ = !$show.$ })])(
+        _s10("head")(() => {
+          _t3("head");
+        })
+      )
+    ),
+    _e8("div", { class: "accordion-collapse collapse", "class--show": /*r1.$*/$show })(
+      _t3((nodeC[0] = context()!.node as any, '')),
+      _e8("div", { class: "accordion-body p-0" })(
+        _s10("body")(() => {
+          _t3("body");
+        })
+      )
+    )
+  )
+)
 }
