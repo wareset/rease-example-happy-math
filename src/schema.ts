@@ -1,19 +1,19 @@
 import { random, randomTo } from './utils'
 
 const fnSumFactory = (max: number) => (): [string, string] => {
-  const n1 = randomTo(0, max)
-  const n2 = randomTo(0, max)
+  const n1 = randomTo(1, max)
+  const n2 = randomTo(1, max)
   return [`${n1} + ${n2}`, (n1 + n2).toString()]
 }
 const fnDifFactory = (max: number) => (): [string, string] => {
-  let n1 = randomTo(0, max)
-  let n2 = randomTo(0, max)
+  let n1 = randomTo(1, max)
+  let n2 = randomTo(1, max)
   if (n1 < n2) [n1, n2] = [n2, n1]
   return [`${n1} − ${n2}`, (n1 - n2).toString()]
 }
 const fnSumOrDifFactory = (max: number) => (): [string, string] => {
-  let n1 = randomTo(0, max)
-  let n2 = randomTo(0, max)
+  let n1 = randomTo(1, max)
+  let n2 = randomTo(1, max)
   if (random() > 0.5) {
     return [`${n1} + ${n2}`, (n1 + n2).toString()]
   } else {
@@ -34,39 +34,39 @@ const fnSumOrDifFactoryAdv = (max: number) => (): [string, string] => {
 }
 
 const fnMulFactory = (max: number) => (): [string, string] => {
-  const n1 = randomTo(0, max)
-  const n2 = randomTo(0, max)
+  const n1 = randomTo(1, max)
+  const n2 = randomTo(1, max)
   return [`${n1} × ${n2}`, (n1 * n2).toString()]
 }
 
 const fnMulFactoryAdv = (max: number, val: number) => (): [string, string] => {
-  const n1 = randomTo(0, max)
+  const n1 = randomTo(1, max)
   return [`${n1} × ${val}`, (n1 * val).toString()]
 }
 
 const fnDivFactory = (max: number) => (): [string, string] => {
-  const n1 = randomTo(0, max)
+  const n1 = randomTo(1, max)
   const n2 = randomTo(1, max)
   return [`${n1 * n2} ÷ ${n2}`, n1.toString()]
 }
 
 const fnDivFactoryAdv = (max: number, val: number) => (): [string, string] => {
-  const n1 = randomTo(0, max)
+  const n1 = randomTo(1, max)
   return [`${n1 * val} ÷ ${val}`, n1.toString()]
 }
 
 const fnChainFactory = (max: number) => (): [string, string] => {
-  let n = randomTo(0, max)
+  let n = randomTo(1, max)
   let res = n, txt = '' + n
 
-  n = randomTo(0, max)
+  n = randomTo(1, max)
   if (n > res || random() > 0.5) {
     res += n, txt += ' + ' + n
   } else {
     res -= n, txt += ' - ' + n
   }
 
-  n = randomTo(0, max)
+  n = randomTo(1, max)
   if (n > res || random() > 0.5) {
     res += n, txt += ' + ' + n
   } else {
@@ -74,7 +74,7 @@ const fnChainFactory = (max: number) => (): [string, string] => {
   }
 
   if (random() > 0.5) {
-    n = randomTo(0, max)
+    n = randomTo(1, max)
     if (n > res || random() > 0.5) {
       res += n, txt += ' + ' + n
     } else {
@@ -89,14 +89,14 @@ const fnChainBracketsFactory = (max: number) => (): [string, string] => {
   let n = randomTo(10, max)
   let res = n, txt = '' + n
 
-  n = randomTo(0, max)
+  n = randomTo(1, max)
   if (n > res) {
     res = n - res, txt = '(' + n + ' - ' + txt + ')'
   } else {
     res -= n, txt = '(' + txt + ' - ' + n + ')'
   }
 
-  n = randomTo(0, max)
+  n = randomTo(1, max)
   if (random() > 0.5) {
     n += res
     res = n - res, txt = n + ' - ' + txt
@@ -107,7 +107,7 @@ const fnChainBracketsFactory = (max: number) => (): [string, string] => {
   }
 
   if (random() > 0.5) {
-    n = randomTo(0, max)
+    n = randomTo(1, max)
     if (random() > 0.5) {
       n += res
       txt = '(' + txt + ')'
