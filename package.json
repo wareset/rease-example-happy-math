@@ -3,13 +3,13 @@
   "version": "2.0.0",
   "description": "wip",
   "license": "MIT",
-  "homepage": "https://github.com/wareset/happy-math",
+  "homepage": "https://github.com/wareset/rease-example-happy-math",
   "bugs": {
-    "url": "https://github.com/wareset/happy-math/issues"
+    "url": "https://github.com/wareset/rease-example-happy-math/issues"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/wareset/happy-math.git"
+    "url": "git+https://github.com/wareset/rease-example-happy-math.git"
   },
   "author": "rease <cftcview@gmail.com>",
   "scripts": {
