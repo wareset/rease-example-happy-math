@@ -5,8 +5,7 @@ import 'rease/jsx'
 import type { TypeReaseContext } from 'rease'
 
 import { createReaseApp } from 'rease'
-import { $innerWidth, $innerHeight } from 'rease'
-import { subject, subscribablefySafeAllWithProxy } from 'rease'
+import { subject, listenEvent } from 'rease'
 
 import { SCHEMA } from './schema'
 import { random, max, round, assess } from './utils'
@@ -38,8 +37,12 @@ function App(
   let classId = 0, taskId = 0
   const $currentTask = subject<boolean>(false)
 
-  const $isVertical =
-    subscribablefySafeAllWithProxy([$innerWidth, $innerHeight], ([w, h]) => w < h)
+  const $innerHeight = subject<number>(0)
+  const $isVertical = subject<boolean>(false)
+  const resize = (): void => {
+    $isVertical.$ = window.innerWidth < ($innerHeight.$ = window.innerHeight)
+  }
+  resize(), listenEvent(window, 'resize', resize)
 
   const $settingsTotal = subject<number>(15)
   const $settingsLastBadSample = subject<boolean>(true)
@@ -113,13 +116,13 @@ function App(
                                   </small>
                                 </div>
                                 <div class="col-auto d-flex align-items-center">
-                                  {$update!! && ((): void => {
+                                  <r-watch r-is={$update!!}>
                                     <span
                                       class={['btn btn-sm', 'btn-outline-' + (v.total ? 'primary' : 'secondary')]}
                                     >
                                       <span class="text-success">{v.right}</span> / <span class="text-danger">{v.errors.length}</span> / {v.total}
                                     </span>
-                                  })}
+                                  </r-watch>
                                 </div>
                               </div>
                             </button>
