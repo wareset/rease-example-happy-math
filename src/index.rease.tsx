@@ -5,7 +5,7 @@ import 'rease/jsx'
 import type { TypeReaseContext } from 'rease'
 
 import { createReaseApp } from 'rease'
-import { subject, listenEvent } from 'rease'
+import { subject, listenOnEvent } from 'rease'
 
 import { SCHEMA } from './schema'
 import { random, max, round, assess } from './utils'
@@ -42,7 +42,7 @@ function App(
   const resize = (): void => {
     $isVertical.$ = window.innerWidth < ($innerHeight.$ = window.innerHeight)
   }
-  resize(), listenEvent(window, 'resize', resize)
+  resize(), listenOnEvent(window, 'resize', resize)
 
   const $settingsTotal = subject<number>(15)
   const $settingsLastBadSample = subject<boolean>(true)
@@ -52,8 +52,8 @@ function App(
   ;(
     <div
       class="text-bg-primary2 d-none2"
-      style--height={$innerHeight!! * 0.75 + 'px'}
-      style--background={logobg}
+      style-height={$innerHeight!! * 0.75 + 'px'}
+      style-background={logobg}
     >
       <div class="position-absolute top-0 end-0 p-2">
         <button class="btn btn-outline-light"
@@ -68,14 +68,14 @@ function App(
   ;(
     <div
       class="position-relative user-select-none"
-      style--height={$innerHeight!! + 'px'}
+      style-height={$innerHeight!! + 'px'}
     >
 
       <div class="position-absolute w-100 h-100 top-0 start-0 overflow-auto"
       >
 
         <div class="container py-3"
-          class--d-none={$currentTask!!}
+          class-d-none={$currentTask!!}
         >
           <div class="accordion">
             {
@@ -145,14 +145,14 @@ function App(
       </div>
 
       <div class="position-absolute w-100 h-100 top-0 start-0 d-flex align-items-stretch"
-        class--d-none={!$currentTask!!}
-        class--flex-row={!$isVertical!!}
-        class--flex-column={$isVertical!!}
+        class-d-none={!$currentTask!!}
+        class-flex-row={!$isVertical!!}
+        class-flex-column={$isVertical!!}
       >
 
         <div class="p-2 d-flex flex-column"
-          style--min-width="60%"
-          style--min-height="50%"
+          style-min-width="60%"
+          style-min-height="50%"
         >
           <div class="mb-1 w-100 d-flex justify-content-between">
             <div>
@@ -176,8 +176,8 @@ function App(
 
           <div
             class="position-relative flex-fill text-white p-3 d-flex justify-content-center align-items-center"
-            style--background-color="#3A6C51"
-            style--font-size="2em"
+            style-background-color="#3A6C51"
+            style-font-size="2em"
           >
             {$sample!!} = {$result!!}
           </div>
@@ -235,8 +235,8 @@ function App(
   ;(
     <div
       class={['modal fade', $isRight!! ? 'bg-success' : 'bg-danger']}
-      class--show={$ready!!}
-      style--display={$ready!! ? 'block' : 'none'}
+      class-show={$ready!!}
+      style-display={$ready!! ? 'block' : 'none'}
       style="--bs-bg-opacity:0.75;"
     >
       <div class="modal-dialog modal-dialog-centered">
@@ -251,7 +251,7 @@ function App(
               <div class="col-12">
                 <button
                   class={['btn', 'btn-warning', 'w-100']}
-                  style--opacity={$totals!! && SCHEMA[classId].tasks[taskId].errors.length < 1 ? 0 : 1}
+                  style-opacity={$totals!! && SCHEMA[classId].tasks[taskId].errors.length < 1 ? 0 : 1}
                   r-on-click-prevent-self={() => {
                     const v = SCHEMA[classId].tasks[taskId]
                     if (v.errors.length) {
@@ -298,8 +298,8 @@ function App(
 
   ;(
     <div class="modal fade bg-dark" style="--bs-bg-opacity:0.75;"
-      class--show={$showSettings!!}
-      style--display={$showSettings!! ? 'block' : 'none'}
+      class-show={$showSettings!!}
+      style-display={$showSettings!! ? 'block' : 'none'}
     >
       <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
         <div class="modal-content">
@@ -338,7 +338,7 @@ function App(
         const v = SCHEMA[classId].tasks[taskId]
 
         ;(<div class="modal fade show bg-info" style="--bs-bg-opacity:0.75;"
-          style--display={ 'block'}
+          style-display={ 'block'}
         >
           <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
             <div class="modal-content">
@@ -378,8 +378,8 @@ const _btn = (
     <button
       type="button"
       class={'w-100 btn ' + btn}
-      style--min-width="1rem"
-      style--min-height="100%"
+      style-min-width="1rem"
+      style-min-height="100%"
       data-value={val}
     >
       {val}

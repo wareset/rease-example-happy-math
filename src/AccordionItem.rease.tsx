@@ -45,7 +45,7 @@ export function AccordionItem(
     <h2 class="accordion-header">
       <button type="button"
         class="accordion-button"
-        class--collapsed={!$show!!}
+        class-collapsed={!$show!!}
         aria-expanded="true"
         r-on-click-prevent={() => { $show.$ = !$show.$ }}
       >
@@ -54,7 +54,7 @@ export function AccordionItem(
     </h2>
     <div
       class="accordion-collapse collapse"
-      class--show={$show!!}
+      class-show={$show!!}
     >
       {(nodeC[0] = context()!.node as any, '')}
       <div class="accordion-body p-0">

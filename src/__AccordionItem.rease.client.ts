@@ -1,12 +1,13 @@
 /* eslint-disable */
 // @ts-nocheck
-/* eslint-disable @typescript-eslint/explicit-function-return-type */
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-nocheck
 import {
   _t as _t3,
-  _s as _s11,
-  _e as _e9,
+  _s as _s12,
+  _e as _e10,
   _$ as _$1,
-  _ul as _ul21
+  _ul as _ul22
 } from 'rease';
 import type { TypeReaseContext } from 'rease'
 import { subject, subscribe, context } from 'rease'
@@ -51,18 +52,18 @@ export function AccordionItem(
     }
   }, [this, [$show.$], nodeC, [null] as [Function | null]])
 
-  ;(  _e9("div", { class: "accordion-item" })(
-    _e9("h2", { class: "accordion-header" })(
-      _e9("button", { type: "button", class: "accordion-button", "class--collapsed": /*r2.$*/_$1([$show], (_$0) => (!_$0[0])), "aria-expanded": "true" }, [_ul21('click-prevent', () => { $show.$ = !$show.$ })])(
-        _s11("head")(() => {
+  ;(  _e10("div", { class: "accordion-item" })(
+    _e10("h2", { class: "accordion-header" })(
+      _e10("button", { type: "button", class: "accordion-button", "class-collapsed": /*r2.$*/_$1([$show], (_$0) => (!_$0[0])), "aria-expanded": "true" }, [_ul22('click-prevent', () => { $show.$ = !$show.$ })])(
+        _s12("head")(() => {
           _t3("head");
         })
       )
     ),
-    _e9("div", { class: "accordion-collapse collapse", "class--show": /*r1.$*/$show })(
+    _e10("div", { class: "accordion-collapse collapse", "class-show": /*r1.$*/$show })(
       _t3((nodeC[0] = context()!.node as any, '')),
-      _e9("div", { class: "accordion-body p-0" })(
-        _s11("body")(() => {
+      _e10("div", { class: "accordion-body p-0" })(
+        _s12("body")(() => {
           _t3("body");
         })
       )
