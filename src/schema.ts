@@ -1,125 +1,147 @@
 import { random, randomTo } from './utils'
 
-const fnSumFactory = (max: number) => (): [string, string] => {
-  const n1 = randomTo(1, max)
-  const n2 = randomTo(1, max)
-  return [`${n1} + ${n2}`, (n1 + n2).toString()]
-}
-const fnDifFactory = (max: number) => (): [string, string] => {
-  let n1 = randomTo(1, max)
-  let n2 = randomTo(1, max)
-  if (n1 < n2) [n1, n2] = [n2, n1]
-  return [`${n1} − ${n2}`, (n1 - n2).toString()]
-}
-const fnSumOrDifFactory = (max: number) => (): [string, string] => {
-  let n1 = randomTo(1, max)
-  let n2 = randomTo(1, max)
-  if (random() > 0.5) {
+function fnSumFactory(max: number) {
+  return function(): [string, string] {
+    const n1 = randomTo(1, max)
+    const n2 = randomTo(1, max)
     return [`${n1} + ${n2}`, (n1 + n2).toString()]
-  } else {
+  }
+}
+
+function fnDifFactory(max: number) {
+  return function(): [string, string] {
+    let n1 = randomTo(1, max)
+    let n2 = randomTo(1, max)
     if (n1 < n2) [n1, n2] = [n2, n1]
     return [`${n1} − ${n2}`, (n1 - n2).toString()]
   }
 }
 
-const _fixBrts = (n: number): number | string => n < 0 ? `(−${-n})` : n
-const fnSumOrDifFactoryAdv = (max: number) => (): [string, string] => {
-  const n1 = randomTo(-max, max)
-  const n2 = randomTo(-max, max)
-  if (random() > 0.5) {
-    return [`${_fixBrts(n1)} + ${_fixBrts(n2)}`, (n1 + n2).toString()]
-  } else {
-    return [`${_fixBrts(n1)} − ${_fixBrts(n2)}`, (n1 - n2).toString()]
+function fnSumOrDifFactory(max: number) {
+  return function(): [string, string] {
+    let n1 = randomTo(1, max)
+    let n2 = randomTo(1, max)
+    if (random() > 0.5) {
+      return [`${n1} + ${n2}`, (n1 + n2).toString()]
+    } else {
+      if (n1 < n2) [n1, n2] = [n2, n1]
+      return [`${n1} − ${n2}`, (n1 - n2).toString()]
+    }
   }
 }
 
-const fnMulFactory = (max: number) => (): [string, string] => {
-  const n1 = randomTo(1, max)
-  const n2 = randomTo(1, max)
-  return [`${n1} × ${n2}`, (n1 * n2).toString()]
-}
-
-const fnMulFactoryAdv = (max: number, val: number) => (): [string, string] => {
-  const n1 = randomTo(1, max)
-  return [`${n1} × ${val}`, (n1 * val).toString()]
-}
-
-const fnDivFactory = (max: number) => (): [string, string] => {
-  const n1 = randomTo(1, max)
-  const n2 = randomTo(1, max)
-  return [`${n1 * n2} ÷ ${n2}`, n1.toString()]
-}
-
-const fnDivFactoryAdv = (max: number, val: number) => (): [string, string] => {
-  const n1 = randomTo(1, max)
-  return [`${n1 * val} ÷ ${val}`, n1.toString()]
-}
-
-const fnChainFactory = (max: number) => (): [string, string] => {
-  let n = randomTo(1, max)
-  let res = n, txt = '' + n
-
-  n = randomTo(1, max)
-  if (n > res || random() > 0.5) {
-    res += n, txt += ' + ' + n
-  } else {
-    res -= n, txt += ' - ' + n
+function _fixBrts(n: number): number | string { return n < 0 ? `(−${-n})` : n }
+function fnSumOrDifFactoryAdv(max: number) {
+  return function(): [string, string] {
+    const n1 = randomTo(-max, max)
+    const n2 = randomTo(-max, max)
+    if (random() > 0.5) {
+      return [`${_fixBrts(n1)} + ${_fixBrts(n2)}`, (n1 + n2).toString()]
+    } else {
+      return [`${_fixBrts(n1)} − ${_fixBrts(n2)}`, (n1 - n2).toString()]
+    }
   }
+}
 
-  n = randomTo(1, max)
-  if (n > res || random() > 0.5) {
-    res += n, txt += ' + ' + n
-  } else {
-    res -= n, txt += ' - ' + n
+function fnMulFactory(max: number) {
+  return function(): [string, string] {
+    const n1 = randomTo(1, max)
+    const n2 = randomTo(1, max)
+    return [`${n1} × ${n2}`, (n1 * n2).toString()]
   }
+}
 
-  if (random() > 0.5) {
+function fnMulFactoryAdv(max: number, val: number) {
+  return function(): [string, string] {
+    const n1 = randomTo(1, max)
+    return [`${n1} × ${val}`, (n1 * val).toString()]
+  }
+}
+
+function fnDivFactory(max: number) {
+  return function(): [string, string] {
+    const n1 = randomTo(1, max)
+    const n2 = randomTo(1, max)
+    return [`${n1 * n2} ÷ ${n2}`, n1.toString()]
+  }
+}
+
+function fnDivFactoryAdv(max: number, val: number) {
+  return function(): [string, string] {
+    const n1 = randomTo(1, max)
+    return [`${n1 * val} ÷ ${val}`, n1.toString()]
+  }
+}
+
+function fnChainFactory(max: number) {
+  return function(): [string, string] {
+    let n = randomTo(1, max)
+    let res = n, txt = '' + n
+
     n = randomTo(1, max)
     if (n > res || random() > 0.5) {
       res += n, txt += ' + ' + n
     } else {
       res -= n, txt += ' - ' + n
     }
-  }
 
-  return [txt, res.toString()]
+    n = randomTo(1, max)
+    if (n > res || random() > 0.5) {
+      res += n, txt += ' + ' + n
+    } else {
+      res -= n, txt += ' - ' + n
+    }
+
+    if (random() > 0.5) {
+      n = randomTo(1, max)
+      if (n > res || random() > 0.5) {
+        res += n, txt += ' + ' + n
+      } else {
+        res -= n, txt += ' - ' + n
+      }
+    }
+
+    return [txt, res.toString()]
+  }
 }
 
-const fnChainBracketsFactory = (max: number) => (): [string, string] => {
-  let n = randomTo(10, max)
-  let res = n, txt = '' + n
+function fnChainBracketsFactory(max: number) {
+  return function(): [string, string] {
+    let n = randomTo(10, max)
+    let res = n, txt = '' + n
 
-  n = randomTo(1, max)
-  if (n > res) {
-    res = n - res, txt = '(' + n + ' - ' + txt + ')'
-  } else {
-    res -= n, txt = '(' + txt + ' - ' + n + ')'
-  }
+    n = randomTo(1, max)
+    if (n > res) {
+      res = n - res, txt = '(' + n + ' - ' + txt + ')'
+    } else {
+      res -= n, txt = '(' + txt + ' - ' + n + ')'
+    }
 
-  n = randomTo(1, max)
-  if (random() > 0.5) {
-    n += res
-    res = n - res, txt = n + ' - ' + txt
-  } else {
-    res += n
-    if (random() > 0.5) txt += ' + ' + n
-    else txt = n + ' + ' + txt
-  }
-
-  if (random() > 0.5) {
     n = randomTo(1, max)
     if (random() > 0.5) {
       n += res
-      txt = '(' + txt + ')'
       res = n - res, txt = n + ' - ' + txt
     } else {
       res += n
       if (random() > 0.5) txt += ' + ' + n
       else txt = n + ' + ' + txt
     }
-  }
 
-  return [txt, res.toString()]
+    if (random() > 0.5) {
+      n = randomTo(1, max)
+      if (random() > 0.5) {
+        n += res
+        txt = '(' + txt + ')'
+        res = n - res, txt = n + ' - ' + txt
+      } else {
+        res += n
+        if (random() > 0.5) txt += ' + ' + n
+        else txt = n + ' + ' + txt
+      }
+    }
+
+    return [txt, res.toString()]
+  }
 }
 
 export const SCHEMA = [
@@ -362,4 +384,8 @@ export const SCHEMA = [
     fn: () => [string, string]
   }[]
 }[]
-SCHEMA.forEach((v) => { v.tasks.forEach((v) => { v.right = v.total = 0, v.errors = [] }) })
+SCHEMA.forEach(function(v) {
+  v.tasks.forEach(function(v) {
+    v.right = v.total = 0, v.errors = []
+  })
+})

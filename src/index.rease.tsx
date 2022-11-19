@@ -5,7 +5,7 @@ import 'rease/jsx'
 import type { TypeReaseContext } from 'rease'
 
 import { createReaseApp } from 'rease'
-import { subject, listenOnEvent } from 'rease'
+import { subject, listen } from 'rease'
 
 import { SCHEMA } from './schema'
 import { random, max, round, assess } from './utils'
@@ -39,10 +39,10 @@ function App(
 
   const $innerHeight = subject<number>(0)
   const $isVertical = subject<boolean>(false)
-  const resize = (): void => {
+  function resize(): void {
     $isVertical.$ = window.innerWidth < ($innerHeight.$ = window.innerHeight)
   }
-  resize(), listenOnEvent(window, 'resize', resize)
+  resize(), listen(window, 'resize', resize)
 
   const $settingsTotal = subject<number>(15)
   const $settingsLastBadSample = subject<boolean>(true)
@@ -57,7 +57,7 @@ function App(
     >
       <div class="position-absolute top-0 end-0 p-2">
         <button class="btn btn-outline-light"
-          r-on-click={() => { $showSettings.$ = true }}
+          r-on-click={function() { $showSettings.$ = true }}
         >
         настройки
         </button>
@@ -79,12 +79,12 @@ function App(
         >
           <div class="accordion">
             {
-              SCHEMA.forEach((v, _classId) => {
+              SCHEMA.forEach(function(v, _classId) {
                 <AccordionItem>
                   <span r-slot="head">{v.head} класс</span>
                   <div r-slot="body" class="px-3 py-2">
-                    {
-                      v.tasks.forEach((v, _taskId) => {
+                    <r-void r-is={
+                      v.tasks.forEach(function(v, _taskId) {
                         if (v.title) {
                           <div class="py-2">
                   
@@ -92,7 +92,7 @@ function App(
                               class="w-100 text-start btn btn-lg2 btn-outline-primary"
                               disabled={($update!! && v.total >= $settingsTotal!!)}
 
-                              r-on-click-prevent={() => {
+                              r-on-click-prevent={function() {
                                 if (v.total < $settingsTotal.$) {
                                   fn = v.fn
 
@@ -135,7 +135,7 @@ function App(
                           />
                         }
                       })
-                    }
+                    }/>
                   </div>
                 </AccordionItem>
               })
@@ -158,7 +158,7 @@ function App(
             <div>
               <button type="button"
                 class="btn btn-sm btn-danger"
-                r-on-click-prevent={() => { $update.$ = random(), $currentTask.$ = false }}
+                r-on-click-prevent={function() { $update.$ = random(), $currentTask.$ = false }}
               >
                 <span
                   class="btn-close d-block btn-close-white ratio ratio-1x1"
@@ -185,7 +185,7 @@ function App(
         </div>
         
         <div class="flex-fill row p-1 m-0"
-          r-on-pointerdown-prevent={(e: MouseEvent): void => {
+          r-on-pointerdown-prevent={function(e: MouseEvent): void {
             let el = e.target as HTMLElement
             while (el && el.localName !== 'button') el = el.parentNode as any
             if (el) {
@@ -199,7 +199,7 @@ function App(
                   $totals.$ = ++v.total
                   $ready.$ = true
 
-                  setTimeout(() => {
+                  setTimeout(function() {
                     if ($isRight.$ || !$settingsLastBadSample.$) {
                       const v = SCHEMA[classId].tasks[taskId]
                       const lastAnswer = answer
@@ -220,11 +220,13 @@ function App(
             }
           }}
         >
-          {(_btn(7), _btn(8), _btn(9))}
-          {(_btn(4), _btn(5), _btn(6))}
-          {(_btn(1), _btn(2), _btn(3))}
-          {(_btn('-'), _btn(0), _btn('.'))}
-          {(_btn(CLEAR, 6, 'btn-outline-danger'), _btn(READY, 6, 'btn-outline-success'))}
+          <r-void r-is={(
+            _btn(7), _btn(8), _btn(9),
+            _btn(4), _btn(5), _btn(6),
+            _btn(1), _btn(2), _btn(3),
+            _btn('-'), _btn(0), _btn('.'),
+            _btn(CLEAR, 6, 'btn-outline-danger'), _btn(READY, 6, 'btn-outline-success')
+          )}/>
         </div>
 
       </div>
@@ -310,20 +312,20 @@ function App(
                 id="settings-input"
                 value={$settingsTotal!!}
                 placeholder="не менее 10"
-                r-on-change={(e: any) => { $settingsTotal.$ = max(5, round(+e.target.value || 0)) }}
+                r-on-change={function(e: any) { $settingsTotal.$ = max(5, round(+e.target.value || 0)) }}
               />
             </div>
             <div class="form-check form-switch pt-3">
               <input class="form-check-input" type="checkbox" role="switch" id="settings-check"
                 checked={$settingsLastBadSample!!}
-                r-on-change={() => { $settingsLastBadSample.$ = !$settingsLastBadSample.$ }}
+                r-on-change={function() { $settingsLastBadSample.$ = !$settingsLastBadSample.$ }}
               />
               <label class="form-check-label" for="settings-check">Снова показывать нерешенный пример</label>
             </div>
           </div>
           <div class="modal-footer">
             <button class="btn btn-primary w-100"
-              r-on-click={(): void => { $showSettings.$ = false }}
+              r-on-click={function(): void { $showSettings.$ = false }}
             >Закрыть</button>
           </div>
         </div>
@@ -334,7 +336,7 @@ function App(
   ;(
     <r-if
       r-is={$showFinalPopup!!}
-      r-children={() => {
+      r-children={function() {
         const v = SCHEMA[classId].tasks[taskId]
 
         ;(<div class="modal fade show bg-info" style="--bs-bg-opacity:0.75;"
@@ -355,7 +357,7 @@ function App(
               </div>
               <div class="modal-footer">
                 <button class="btn btn-primary w-100"
-                  r-on-click={(): void => {
+                  r-on-click={function(): void {
                     $update.$ = random(), $currentTask.$ = false
                     $showFinalPopup.$ = false
                     $ready.$ = false
@@ -371,9 +373,9 @@ function App(
   )
 }
 
-const _btn = (
+function _btn(
   val: string | number, col = 4, btn = 'btn-lg btn-outline-secondary'
-): void => {
+): void {
   <div class={`col-${col} m-0 p-1`}>
     <button
       type="button"
@@ -388,4 +390,4 @@ const _btn = (
   </div>
 }
 
-createReaseApp(App, { target: document.body })
+createReaseApp(document.body, function() { <App/> })

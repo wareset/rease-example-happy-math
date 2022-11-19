@@ -1,7 +1,7 @@
 import type { TypeReaseContext } from 'rease'
 import { subject, subscribe, context } from 'rease'
 
-const reflow = (element: HTMLElement): any => element.offsetHeight
+function reflow(element: HTMLElement): void { element.offsetHeight }
 
 export function AccordionItem(
   this: TypeReaseContext
@@ -9,7 +9,7 @@ export function AccordionItem(
   const nodeC: [HTMLElement] = [] as any
   const $show = subject<boolean>(false)
 
-  subscribe($show, (show, [ctx, showC, nodeC, completeC]) => {
+  subscribe($show, function(show, [ctx, showC, nodeC, completeC]) {
     const node = nodeC[0]
 
     if (showC[0] !== (showC[0] = show) && node) {
@@ -19,7 +19,7 @@ export function AccordionItem(
       if (!show) {
         style.height = `${node.getBoundingClientRect().height}px`, reflow(node)
         classList.add('collapsing'), classList.remove('collapse', 'show')
-        complete = (): void => {
+        complete = function(): void {
           if (completeC[0] === complete && ctx.on) {
             classList.remove('collapsing'), classList.add('collapse')
           }
@@ -28,7 +28,7 @@ export function AccordionItem(
       } else {
         classList.remove('collapse'), classList.add('collapsing')
         style.height = '0'
-        complete = (): void => {
+        complete = function(): void {
           if (completeC[0] === complete && ctx.on) {
             classList.remove('collapsing'), classList.add('collapse', 'show')
             style.height = ''
@@ -47,7 +47,7 @@ export function AccordionItem(
         class="accordion-button"
         class-collapsed={!$show!!}
         aria-expanded="true"
-        r-on-click-prevent={() => { $show.$ = !$show.$ }}
+        r-on-click-prevent={function() { $show.$ = !$show.$ }}
       >
         <r-slot r-is="head">head</r-slot>
       </button>
@@ -56,7 +56,7 @@ export function AccordionItem(
       class="accordion-collapse collapse"
       class-show={$show!!}
     >
-      {(nodeC[0] = context()!.node as any, '')}
+      <r-void r-is={nodeC[0] = context()!.node as any}/>
       <div class="accordion-body p-0">
         <r-slot r-is="body">body</r-slot>
       </div>

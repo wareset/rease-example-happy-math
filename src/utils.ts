@@ -1,10 +1,11 @@
 export const { random: randomDefault, round, min, max } = Math
 
-export const random = (): number => randomDefault() || random()
-export const randomTo = (min: number, max: number): number =>
-  round(random() * (max - min) + min)
+export function random(): number { return randomDefault() || random() }
+export function randomTo(min: number, max: number): number {
+  return round(random() * (max - min) + min)
+}
 
-export const assess = (total: number, right: number): string => {
+export function assess(total: number, right: number): string {
   let res = ''
   const div = right / total
   
@@ -24,6 +25,6 @@ export const assess = (total: number, right: number): string => {
   else if (div > 0.35) res = '1'
   else res = '1-'
   
-  console.log(total, right, div, res)
+  // console.log(total, right, div, res)
   return res
 }

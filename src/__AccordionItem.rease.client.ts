@@ -4,15 +4,15 @@
 // @ts-nocheck
 import {
   _t as _t3,
-  _s as _s12,
-  _e as _e10,
+  _S as _S12,
+  _E as _E10,
   _$ as _$1,
-  _ul as _ul22
+  _l as _l22
 } from 'rease';
 import type { TypeReaseContext } from 'rease'
 import { subject, subscribe, context } from 'rease'
 
-const reflow = (element: HTMLElement): any => element.offsetHeight
+function reflow(element: HTMLElement): void { element.offsetHeight }
 
 export function AccordionItem(
   this: TypeReaseContext
@@ -20,7 +20,7 @@ export function AccordionItem(
   const nodeC: [HTMLElement] = [] as any
   const $show = subject<boolean>(false)
 
-  subscribe($show, (show, [ctx, showC, nodeC, completeC]) => {
+  subscribe($show, function(show, [ctx, showC, nodeC, completeC]) {
     const node = nodeC[0]
 
     if (showC[0] !== (showC[0] = show) && node) {
@@ -30,7 +30,7 @@ export function AccordionItem(
       if (!show) {
         style.height = `${node.getBoundingClientRect().height}px`, reflow(node)
         classList.add('collapsing'), classList.remove('collapse', 'show')
-        complete = (): void => {
+        complete = function(): void {
           if (completeC[0] === complete && ctx.on) {
             classList.remove('collapsing'), classList.add('collapse')
           }
@@ -39,7 +39,7 @@ export function AccordionItem(
       } else {
         classList.remove('collapse'), classList.add('collapsing')
         style.height = '0'
-        complete = (): void => {
+        complete = function(): void {
           if (completeC[0] === complete && ctx.on) {
             classList.remove('collapsing'), classList.add('collapse', 'show')
             style.height = ''
@@ -52,18 +52,18 @@ export function AccordionItem(
     }
   }, [this, [$show.$], nodeC, [null] as [Function | null]])
 
-  ;(  _e10("div", { class: "accordion-item" })(
-    _e10("h2", { class: "accordion-header" })(
-      _e10("button", { type: "button", class: "accordion-button", "class-collapsed": /*r2.$*/_$1([$show], (_$0) => (!_$0[0])), "aria-expanded": "true" }, [_ul22('click-prevent', () => { $show.$ = !$show.$ })])(
-        _s12("head")(() => {
+  ;(  _E10("div", { class: "accordion-item" })(
+    _E10("h2", { class: "accordion-header" })(
+      _E10("button", { type: "button", class: "accordion-button", "class-collapsed": /*r2.$*/_$1([$show], (_$0) => (!_$0[0])), "aria-expanded": "true" }, [_l22('click-prevent', function() { $show.$ = !$show.$ })])(
+        _S12("head")(() => {
           _t3("head");
         })
       )
     ),
-    _e10("div", { class: "accordion-collapse collapse", "class-show": /*r1.$*/$show })(
-      _t3((nodeC[0] = context()!.node as any, '')),
-      _e10("div", { class: "accordion-body p-0" })(
-        _s12("body")(() => {
+    _E10("div", { class: "accordion-collapse collapse", "class-show": /*r1.$*/$show })(
+      nodeC[0] = context()!.node as any,
+      _E10("div", { class: "accordion-body p-0" })(
+        _S12("body")(() => {
           _t3("body");
         })
       )
