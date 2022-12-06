@@ -4,10 +4,10 @@
 // @ts-nocheck
 import {
   _t as _t3,
-  _S as _S12,
-  _E as _E10,
+  _S as _S11,
+  _E as _E9,
   _$ as _$1,
-  _l as _l22
+  _l as _l21
 } from 'rease';
 import type { TypeReaseContext } from 'rease'
 import { subject, subscribe, context } from 'rease'
@@ -52,18 +52,18 @@ export function AccordionItem(
     }
   }, [this, [$show.$], nodeC, [null] as [Function | null]])
 
-  ;(  _E10("div", { class: "accordion-item" })(
-    _E10("h2", { class: "accordion-header" })(
-      _E10("button", { type: "button", class: "accordion-button", "class-collapsed": /*r2.$*/_$1([$show], (_$0) => (!_$0[0])), "aria-expanded": "true" }, [_l22('click-prevent', function() { $show.$ = !$show.$ })])(
-        _S12("head")(() => {
+  ;(  _E9("div", { class: "accordion-item" })(
+    _E9("h2", { class: "accordion-header" })(
+      _E9("button", { type: "button", class: "accordion-button", "class-collapsed": /*r2.$*/_$1([$show], (_$0) => (!_$0[0])), "aria-expanded": "true" }, [_l21('click-prevent', function() { $show.$ = !$show.$ })])(
+        _S11("head")(() => {
           _t3("head");
         })
       )
     ),
-    _E10("div", { class: "accordion-collapse collapse", "class-show": /*r1.$*/$show })(
+    _E9("div", { class: "accordion-collapse collapse", "class-show": /*r1.$*/$show })(
       nodeC[0] = context()!.node as any,
-      _E10("div", { class: "accordion-body p-0" })(
-        _S12("body")(() => {
+      _E9("div", { class: "accordion-body p-0" })(
+        _S11("body")(() => {
           _t3("body");
         })
       )

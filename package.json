@@ -24,13 +24,13 @@
     "@rollup/plugin-commonjs": "^23.0.2",
     "@rollup/plugin-node-resolve": "^15.0.1",
     "@rollup/plugin-replace": "^5.0.1",
+    "google-closure-compiler": "20221102.0.0",
     "rease": "0.2.x",
     "rollup": "3.3.0",
     "rollup-plugin-livereload": "^2.0.5",
     "rollup-plugin-rease": "0.2.x",
+    "sucrase": "^3.29.0",
     "terser": "^5.15.1",
-    "sucrase": "^3.28.0",
-    "typescript": "^4.8.4",
-    "google-closure-compiler": "20221102.0.0"
+    "typescript": "^4.8.4"
   }
 }

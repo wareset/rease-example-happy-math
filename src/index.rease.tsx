@@ -8,7 +8,7 @@ import { createReaseApp } from 'rease'
 import { subject, listen } from 'rease'
 
 import { SCHEMA } from './schema'
-import { random, max, round, assess } from './utils'
+import { max, round, assess } from './utils'
 
 // @ts-ignore
 import logo2 from '../static/logo2.svg'
@@ -24,7 +24,7 @@ function App(
 ): void {
   const $ready = subject<boolean>(false)
   const $isRight = subject<boolean>(false)
-  const $update = subject<number>(1)
+  const $update = subject({})
 
   const $rights = subject<number>(0)
   const $totals = subject<number>(0)
@@ -158,7 +158,7 @@ function App(
             <div>
               <button type="button"
                 class="btn btn-sm btn-danger"
-                r-on-click-prevent={function() { $update.$ = random(), $currentTask.$ = false }}
+                r-on-click-prevent={function() { $update.$ = {}, $currentTask.$ = false }}
               >
                 <span
                   class="btn-close d-block btn-close-white ratio ratio-1x1"
@@ -358,7 +358,7 @@ function App(
               <div class="modal-footer">
                 <button class="btn btn-primary w-100"
                   r-on-click={function(): void {
-                    $update.$ = random(), $currentTask.$ = false
+                    $update.$ = {}, $currentTask.$ = false
                     $showFinalPopup.$ = false
                     $ready.$ = false
                     v.last = null
