@@ -2,7 +2,7 @@ import 'rease/jsx'
 // import * as rease from 'rease'
 // console.log(rease)
 
-import type { TypeReaseContext } from 'rease'
+import type { TypeReaseContext, TypeReaseSubject } from 'rease'
 
 import { createReaseApp } from 'rease'
 import { subject, listen } from 'rease'
@@ -24,7 +24,8 @@ function App(
 ): void {
   const $ready = subject<boolean>(false)
   const $isRight = subject<boolean>(false)
-  const $update = subject({})
+  let $updateCurrent!: TypeReaseSubject<any>
+  // const $update = subject({})
 
   const $rights = subject<number>(0)
   const $totals = subject<number>(0)
@@ -89,46 +90,50 @@ function App(
                     <r-void r-is={
                       v.tasks.forEach(function(v, _taskId) {
                         if (v.title) {
-                          <div class="py-2">
+                          const $update = subject({})
+                          ;(
+                            <div class="py-2">
                   
-                            <button type="button"
-                              class="w-100 text-start btn btn-lg2 btn-outline-primary"
-                              disabled={($update!! && v.total >= $settingsTotal!!)}
+                              <button type="button"
+                                class="w-100 text-start btn btn-lg2 btn-outline-primary"
+                                disabled={($update!! && v.total >= $settingsTotal!!)}
 
-                              r-on-click-prevent={function() {
-                                if (v.total < $settingsTotal.$) {
-                                  fn = v.fn
+                                r-on-click-prevent={function() {
+                                  if (v.total < $settingsTotal.$) {
+                                    $updateCurrent = $update
+                                    fn = v.fn
 
-                                  $result.$ = ''
-                                  ;[sample, answer] = v.last || (v.last = fn())
-                                  $sample.$ = sample
+                                    $result.$ = ''
+                                    ;[sample, answer] = v.last || (v.last = fn())
+                                    $sample.$ = sample
 
-                                  $totals.$ = v.total
-                                  $rights.$ = v.right
+                                    $totals.$ = v.total
+                                    $rights.$ = v.right
 
-                                  classId = _classId, taskId = _taskId
-                                  // console.log([classId, taskId])
-                                  $currentTask.$ = true
-                                }
-                              }}
-                            >
-                              <div class="row">
-                                <div class="col d-flex align-items-center">
-                                  <small>
-                                    <small>{++taskNumber}.</small> {v.title}
-                                  </small>
+                                    classId = _classId, taskId = _taskId
+                                    // console.log([classId, taskId])
+                                    $currentTask.$ = true
+                                  }
+                                }}
+                              >
+                                <div class="row">
+                                  <div class="col d-flex align-items-center">
+                                    <small>
+                                      <small>{++taskNumber}.</small> {v.title}
+                                    </small>
+                                  </div>
+                                  <div class="col-auto d-flex align-items-center">
+                                    <span
+                                      class={['btn btn-sm', $update!! && 'btn-outline-' + (v.total ? 'primary' : 'secondary')]}
+                                    >
+                                      <span class="text-success">{$update!! && v.right}</span> / <span class="text-danger">{$update!! && v.errors.length}</span> / {$update!! && v.total}
+                                    </span>
+                                  </div>
                                 </div>
-                                <div class="col-auto d-flex align-items-center">
-                                  <span
-                                    class={['btn btn-sm', $update!! && 'btn-outline-' + (v.total ? 'primary' : 'secondary')]}
-                                  >
-                                    <span class="text-success">{$update!! && v.right}</span> / <span class="text-danger">{$update!! && v.errors.length}</span> / {$update!! && v.total}
-                                  </span>
-                                </div>
-                              </div>
-                            </button>
+                              </button>
                     
-                          </div>
+                            </div>
+                          )
                         } else {
                           <div
                             class="my-3 border-bottom border-primary"
@@ -162,7 +167,7 @@ function App(
           <div>
             <button type="button"
               class="btn btn-sm btn-danger"
-              r-on-click-prevent={function() { $update.$ = {}, $currentTask.$ = false }}
+              r-on-click-prevent={function() { $updateCurrent.$ = {}, $currentTask.$ = false }}
             >
               <span
                 class="btn-close d-block btn-close-white ratio ratio-1x1"
@@ -350,7 +355,7 @@ function App(
               <div class="modal-header justify-content-center align-items-center flex-column">
                 <h3>{SCHEMA[classId].head}</h3>
                 <big>
-                  <small>{taskId + 1}.</small> {v.title}
+                  {v.title}
                 </big>
               </div>
               <div class="modal-body">
@@ -361,7 +366,7 @@ function App(
               <div class="modal-footer">
                 <button class="btn btn-primary w-100"
                   r-on-click={function(): void {
-                    $update.$ = {}, $currentTask.$ = false
+                    $updateCurrent.$ = {}, $currentTask.$ = false
                     $showFinalPopup.$ = false
                     $ready.$ = false
                     v.last = null

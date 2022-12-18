@@ -15,7 +15,7 @@ import {
 // import * as rease from 'rease'
 // console.log(rease)
 
-import type { TypeReaseContext } from 'rease'
+import type { TypeReaseContext, TypeReaseSubject } from 'rease'
 
 import { createReaseApp } from 'rease'
 import { subject, listen } from 'rease'
@@ -37,7 +37,8 @@ function App(
 ): void {
   const $ready = subject<boolean>(false)
   const $isRight = subject<boolean>(false)
-  const $update = subject({})
+  let $updateCurrent!: TypeReaseSubject<any>
+  // const $update = subject({})
 
   const $rights = subject<number>(0)
   const $totals = subject<number>(0)
@@ -90,23 +91,26 @@ function App(
               ["body", () => { _E9("div", { class: "px-3 py-2" })(
                 v.tasks.forEach(function(v, _taskId) {
                         if (v.title) {
-                                            _E9("div", { class: "py-2" })(
+                          const $update = subject({})
+                          ;(
+                                              _E9("div", { class: "py-2" })(
                     _E9("button", { type: "button", class: "w-100 text-start btn btn-lg2 btn-outline-primary", disabled: /*r2.$*/_$1([$settingsTotal, $update], (_$0) => (_$0[1] && v.total >= _$0[0])) }, [_l21('click-prevent', function() {
-                                if (v.total < $settingsTotal.$) {
-                                  fn = v.fn
+                                  if (v.total < $settingsTotal.$) {
+                                    $updateCurrent = $update
+                                    fn = v.fn
 
-                                  $result.$ = ''
-                                  ;[sample, answer] = v.last || (v.last = fn())
-                                  $sample.$ = sample
+                                    $result.$ = ''
+                                    ;[sample, answer] = v.last || (v.last = fn())
+                                    $sample.$ = sample
 
-                                  $totals.$ = v.total
-                                  $rights.$ = v.right
+                                    $totals.$ = v.total
+                                    $rights.$ = v.right
 
-                                  classId = _classId, taskId = _taskId
-                                  // console.log([classId, taskId])
-                                  $currentTask.$ = true
-                                }
-                              })])(
+                                    classId = _classId, taskId = _taskId
+                                    // console.log([classId, taskId])
+                                    $currentTask.$ = true
+                                  }
+                                })])(
                       _E9("div", { class: "row" })(
                         _E9("div", { class: "col d-flex align-items-center" })(
                           _E9("small")(
@@ -135,6 +139,7 @@ function App(
                     )
                   )
 
+                          )
                         } else {
                                             _E9("div", { class: "my-3 border-bottom border-primary", style: "--bs-border-opacity:0.375;" })()
 
@@ -157,7 +162,7 @@ function App(
     _E9("div", { class: "p-2 d-flex flex-column", "style-min-width": "60%", "style-min-height": "50%" })(
       _E9("div", { class: "mb-1 w-100 d-flex justify-content-between" })(
         _E9("div")(
-          _E9("button", { type: "button", class: "btn btn-sm btn-danger" }, [_l21('click-prevent', function() { $update.$ = {}, $currentTask.$ = false })])(
+          _E9("button", { type: "button", class: "btn btn-sm btn-danger" }, [_l21('click-prevent', function() { $updateCurrent.$ = {}, $currentTask.$ = false })])(
             _E9("span", { class: "btn-close d-block btn-close-white ratio ratio-1x1", style: "width:0.375em;" })()
           )
         ),
@@ -283,11 +288,6 @@ function App(
               _x2(SCHEMA[classId].head)
             ),
             _E9("big")(
-              _E9("small")(
-                _x2(taskId + 1),
-                _t3(".")
-              ),
-              _t3(" "),
               _x2(v.title)
             )
           ),
@@ -311,7 +311,7 @@ function App(
           ),
           _E9("div", { class: "modal-footer" })(
             _E9("button", { class: "btn btn-primary w-100" }, [_l21('click', function(): void {
-                    $update.$ = {}, $currentTask.$ = false
+                    $updateCurrent.$ = {}, $currentTask.$ = false
                     $showFinalPopup.$ = false
                     $ready.$ = false
                     v.last = null
