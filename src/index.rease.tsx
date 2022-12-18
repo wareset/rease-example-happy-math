@@ -52,7 +52,7 @@ function App(
   ;(
     <div
       class="text-bg-primary2 d-none2"
-      style-height={$innerHeight!! * 0.75 + 'px'}
+      style-height={$innerHeight!! * 0.375 + 'px'}
       style-background={logobg}
     >
       <div class="position-absolute top-0 end-0 p-2">
@@ -75,10 +75,10 @@ function App(
       >
 
         <div class="container py-3"
-          class-d-none={$currentTask!!}
+          // class-d-none={$currentTask!!}
         >
           <div class="accordion">
-            {
+            <r-void r-is={
               SCHEMA.forEach(function(v, _classId) {
                 <AccordionItem>
                   <span r-slot="head">{v.head} класс</span>
@@ -116,13 +116,11 @@ function App(
                                   </small>
                                 </div>
                                 <div class="col-auto d-flex align-items-center">
-                                  <r-watch r-is={$update!!}>
-                                    <span
-                                      class={['btn btn-sm', 'btn-outline-' + (v.total ? 'primary' : 'secondary')]}
-                                    >
-                                      <span class="text-success">{v.right}</span> / <span class="text-danger">{v.errors.length}</span> / {v.total}
-                                    </span>
-                                  </r-watch>
+                                  <span
+                                    class={['btn btn-sm', $update!! && 'btn-outline-' + (v.total ? 'primary' : 'secondary')]}
+                                  >
+                                    <span class="text-success">{$update!! && v.right}</span> / <span class="text-danger">{$update!! && v.errors.length}</span> / {$update!! && v.total}
+                                  </span>
                                 </div>
                               </div>
                             </button>
@@ -139,99 +137,101 @@ function App(
                   </div>
                 </AccordionItem>
               })
-            }
+            }/>
           </div>
         </div>
       </div>
+    </div>
+  )
 
-      <div class="position-absolute w-100 h-100 top-0 start-0 d-flex align-items-stretch"
-        class-d-none={!$currentTask!!}
-        class-flex-row={!$isVertical!!}
-        class-flex-column={$isVertical!!}
+  ;(
+    <div class="position-fixed w-100 h-100 top-0 start-0 d-flex align-items-stretch bg-light"
+      class-d-none={!$currentTask!!}
+      class-flex-row={!$isVertical!!}
+      class-flex-column={$isVertical!!}
+    >
+
+      <div class="p-2 d-flex flex-column"
+        style-min-width="60%"
+        style-min-height="50%"
       >
-
-        <div class="p-2 d-flex flex-column"
-          style-min-width="60%"
-          style-min-height="50%"
-        >
-          <div class="mb-1 w-100 d-flex justify-content-between">
-            <div>
-              <button type="button"
-                class="btn btn-sm btn-danger"
-                r-on-click-prevent={function() { $update.$ = {}, $currentTask.$ = false }}
-              >
-                <span
-                  class="btn-close d-block btn-close-white ratio ratio-1x1"
-                  style="width:0.375em;"
-                />
-              </button>
-            </div>
-
-            <div>
-              <div class="h1 d-inline">
-                <span class="text-success">{$rights!!}</span> / <span class="text-danger">{$totals!! && SCHEMA[classId].tasks[taskId].errors.length}</span> / {$totals!!}
-              </div>
-            </div>
+        <div class="mb-1 w-100 d-flex justify-content-between">
+          <div>
+            <button type="button"
+              class="btn btn-sm btn-danger"
+              r-on-click-prevent={function() { $update.$ = {}, $currentTask.$ = false }}
+            >
+              <span
+                class="btn-close d-block btn-close-white ratio ratio-1x1"
+                style="width:0.375em;"
+              />
+            </button>
           </div>
 
-          <div
-            class="position-relative flex-fill text-white p-3 d-flex justify-content-center align-items-center"
-            style-background-color="#3A6C51"
-            style-font-size="2em"
-          >
-            {$sample!!} = {$result!!}
+          <div>
+            <div class="h1 d-inline">
+              <span class="text-success">{$rights!!}</span> / <span class="text-danger">{$totals!! && SCHEMA[classId].tasks[taskId].errors.length}</span> / {$totals!!}
+            </div>
           </div>
-
         </div>
+
+        <div
+          class="position-relative flex-fill text-white p-3 d-flex justify-content-center align-items-center"
+          style-background-color="#3A6C51"
+          style-font-size="2em"
+        >
+          {$sample!!} = {$result!!}
+        </div>
+
+      </div>
         
-        <div class="flex-fill row p-1 m-0"
-          r-on-pointerdown-prevent={function(e: MouseEvent): void {
-            let el = e.target as HTMLElement
-            while (el && el.localName !== 'button') el = el.parentNode as any
-            if (el) {
-              const value = el.getAttribute('data-value')
-              const v = SCHEMA[classId].tasks[taskId]
-              if (value === READY) {
-                if ($result.$) {
-                  $isRight.$ = $result.$ === answer
-                  if ($isRight.$) $rights.$ = ++v.right
-                  else v.errors.push([sample, answer])
-                  $totals.$ = ++v.total
-                  $ready.$ = true
+      <div class="flex-fill row p-1 m-0"
+        r-on-pointerdown-prevent={function(e: MouseEvent): void {
+          let el = e.target as HTMLElement
+          while (el && el.localName !== 'button') el = el.parentNode as any
+          if (el) {
+            const value = el.getAttribute('data-value')
+            const v = SCHEMA[classId].tasks[taskId]
+            if (value === READY) {
+              if ($result.$) {
+                $isRight.$ = $result.$ === answer
+                if ($isRight.$) $rights.$ = ++v.right
+                else v.errors.push([sample, answer])
+                $totals.$ = ++v.total
+                $ready.$ = true
 
-                  setTimeout(function() {
-                    if ($isRight.$ || !$settingsLastBadSample.$) {
-                      const v = SCHEMA[classId].tasks[taskId]
-                      const lastAnswer = answer
+                setTimeout(function() {
+                  if ($isRight.$ || !$settingsLastBadSample.$) {
+                    const v = SCHEMA[classId].tasks[taskId]
+                    const lastAnswer = answer
                       ;[sample, answer] = v.last = fn()
-                      if (answer === lastAnswer) [sample, answer] = v.last = fn()
-                      $sample.$ = sample
-                    }
-                    $result.$ = ''
-                    if (v.total >= $settingsTotal.$) $showFinalPopup.$ = true
-                    $ready.$ = false
-                  }, 875)
-                }
-              } else if (value === CLEAR) {
-                $result.$ = $result.$.slice(0, -1)
-              } else {
-                $result.$ += value
+                    if (answer === lastAnswer) [sample, answer] = v.last = fn()
+                    $sample.$ = sample
+                  }
+                  $result.$ = ''
+                  if (v.total >= $settingsTotal.$) $showFinalPopup.$ = true
+                  $ready.$ = false
+                }, 875)
               }
+            } else if (value === CLEAR) {
+              $result.$ = $result.$.slice(0, -1)
+            } else {
+              $result.$ += value
             }
-          }}
-        >
-          <r-void r-is={(
-            _btn(7), _btn(8), _btn(9),
-            _btn(4), _btn(5), _btn(6),
-            _btn(1), _btn(2), _btn(3),
-            _btn('-'), _btn(0), _btn('.'),
-            _btn(CLEAR, 6, 'btn-outline-danger'), _btn(READY, 6, 'btn-outline-success')
-          )}/>
-        </div>
-
+          }
+        }}
+      >
+        <r-void r-is={(
+          _btn(7), _btn(8), _btn(9),
+          _btn(4), _btn(5), _btn(6),
+          _btn(1), _btn(2), _btn(3),
+          _btn('-'), _btn(0), _btn('.'),
+          _btn(CLEAR, 6, 'btn-outline-danger'), _btn(READY, 6, 'btn-outline-success')
+        )}/>
       </div>
 
     </div>
+  
   )
 
   ;(

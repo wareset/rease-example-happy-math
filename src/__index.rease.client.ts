@@ -9,8 +9,7 @@ import {
   _t as _t3,
   _l as _l21,
   _i as _i13,
-  _$ as _$1,
-  _w as _w16
+  _$ as _$1
 } from 'rease';
 
 // import * as rease from 'rease'
@@ -64,7 +63,7 @@ function App(
   const $showFinalPopup = subject<boolean>(false)
 
   ;(
-      _E9("div", { class: "text-bg-primary2 d-none2", "style-height": /*r2.$*/_$1([$innerHeight], (_$0) => (_$0[0] * 0.75 + 'px')), "style-background": logobg })(
+      _E9("div", { class: "text-bg-primary2 d-none2", "style-height": /*r2.$*/_$1([$innerHeight], (_$0) => (_$0[0] * 0.375 + 'px')), "style-background": logobg })(
     _E9("div", { class: "position-absolute top-0 end-0 p-2" })(
       _E9("button", { class: "btn btn-outline-light" }, [_l21('click', function() { $showSettings.$ = true })])(
         _t3("настройки")
@@ -77,9 +76,9 @@ function App(
   ;(
       _E9("div", { class: "position-relative user-select-none", "style-height": /*r2.$*/_$1([$innerHeight], (_$0) => (_$0[0] + 'px')) })(
     _E9("div", { class: "position-absolute w-100 h-100 top-0 start-0 overflow-auto" })(
-      _E9("div", { class: "container py-3", "class-d-none": /*r1.$*/$currentTask })(
+      _E9("div", { class: "container py-3" })(
         _E9("div", { class: "accordion" })(
-          _x2(SCHEMA.forEach(function(v, _classId) {
+          SCHEMA.forEach(function(v, _classId) {
                             _C7(AccordionItem)([
               ["head", () => { _E9("span")(
                 _x2(v.head),
@@ -117,19 +116,17 @@ function App(
                           )
                         ),
                         _E9("div", { class: "col-auto d-flex align-items-center" })(
-                          _w16(/*r1.$*/$update)(() => {
-                            _E9("span", { class: ['btn btn-sm', 'btn-outline-' + (v.total ? 'primary' : 'secondary')] })(
-                              _E9("span", { class: "text-success" })(
-                                _x2(v.right)
-                              ),
-                              _t3(" / "),
-                              _E9("span", { class: "text-danger" })(
-                                _x2(v.errors.length)
-                              ),
-                              _t3(" / "),
-                              _x2(v.total)
-                            );
-                          })
+                          _E9("span", { class: /*r2.$*/_$1([$update], (_$0) => (['btn btn-sm', _$0[0] && 'btn-outline-' + (v.total ? 'primary' : 'secondary')])) })(
+                            _E9("span", { class: "text-success" })(
+                              _x2(/*r2.$*/_$1([$update], (_$0) => (_$0[0] && v.right)))
+                            ),
+                            _t3(" / "),
+                            _E9("span", { class: "text-danger" })(
+                              _x2(/*r2.$*/_$1([$update], (_$0) => (_$0[0] && v.errors.length)))
+                            ),
+                            _t3(" / "),
+                            _x2(/*r2.$*/_$1([$update], (_$0) => (_$0[0] && v.total)))
+                          )
                         )
                       )
                     )
@@ -143,83 +140,88 @@ function App(
               ) }]
             ])
 
-              }))
+              })
         )
-      )
-    ),
-    _E9("div", { class: "position-absolute w-100 h-100 top-0 start-0 d-flex align-items-stretch", "class-d-none": /*r2.$*/_$1([$currentTask], (_$0) => (!_$0[0])), "class-flex-row": /*r2.$*/_$1([$isVertical], (_$0) => (!_$0[0])), "class-flex-column": /*r1.$*/$isVertical })(
-      _E9("div", { class: "p-2 d-flex flex-column", "style-min-width": "60%", "style-min-height": "50%" })(
-        _E9("div", { class: "mb-1 w-100 d-flex justify-content-between" })(
-          _E9("div")(
-            _E9("button", { type: "button", class: "btn btn-sm btn-danger" }, [_l21('click-prevent', function() { $update.$ = {}, $currentTask.$ = false })])(
-              _E9("span", { class: "btn-close d-block btn-close-white ratio ratio-1x1", style: "width:0.375em;" })()
-            )
-          ),
-          _E9("div")(
-            _E9("div", { class: "h1 d-inline" })(
-              _E9("span", { class: "text-success" })(
-                _x2(/*r1.$*/$rights)
-              ),
-              _t3(" / "),
-              _E9("span", { class: "text-danger" })(
-                _x2(/*r2.$*/_$1([$totals], (_$0) => (_$0[0] && SCHEMA[classId].tasks[taskId].errors.length)))
-              ),
-              _t3(" / "),
-              _x2(/*r1.$*/$totals)
-            )
-          )
-        ),
-        _E9("div", { class: "position-relative flex-fill text-white p-3 d-flex justify-content-center align-items-center", "style-background-color": "#3A6C51", "style-font-size": "2em" })(
-          _x2(/*r1.$*/$sample),
-          _t3(" = "),
-          _x2(/*r1.$*/$result)
-        )
-      ),
-      _E9("div", { class: "flex-fill row p-1 m-0" }, [_l21('pointerdown-prevent', function(e: MouseEvent): void {
-            let el = e.target as HTMLElement
-            while (el && el.localName !== 'button') el = el.parentNode as any
-            if (el) {
-              const value = el.getAttribute('data-value')
-              const v = SCHEMA[classId].tasks[taskId]
-              if (value === READY) {
-                if ($result.$) {
-                  $isRight.$ = $result.$ === answer
-                  if ($isRight.$) $rights.$ = ++v.right
-                  else v.errors.push([sample, answer])
-                  $totals.$ = ++v.total
-                  $ready.$ = true
-
-                  setTimeout(function() {
-                    if ($isRight.$ || !$settingsLastBadSample.$) {
-                      const v = SCHEMA[classId].tasks[taskId]
-                      const lastAnswer = answer
-                      ;[sample, answer] = v.last = fn()
-                      if (answer === lastAnswer) [sample, answer] = v.last = fn()
-                      $sample.$ = sample
-                    }
-                    $result.$ = ''
-                    if (v.total >= $settingsTotal.$) $showFinalPopup.$ = true
-                    $ready.$ = false
-                  }, 875)
-                }
-              } else if (value === CLEAR) {
-                $result.$ = $result.$.slice(0, -1)
-              } else {
-                $result.$ += value
-              }
-            }
-          })])(
-        (
-            _btn(7), _btn(8), _btn(9),
-            _btn(4), _btn(5), _btn(6),
-            _btn(1), _btn(2), _btn(3),
-            _btn('-'), _btn(0), _btn('.'),
-            _btn(CLEAR, 6, 'btn-outline-danger'), _btn(READY, 6, 'btn-outline-success')
-          )
       )
     )
   )
 
+  )
+
+  ;(
+      _E9("div", { class: "position-fixed w-100 h-100 top-0 start-0 d-flex align-items-stretch bg-light", "class-d-none": /*r2.$*/_$1([$currentTask], (_$0) => (!_$0[0])), "class-flex-row": /*r2.$*/_$1([$isVertical], (_$0) => (!_$0[0])), "class-flex-column": /*r1.$*/$isVertical })(
+    _E9("div", { class: "p-2 d-flex flex-column", "style-min-width": "60%", "style-min-height": "50%" })(
+      _E9("div", { class: "mb-1 w-100 d-flex justify-content-between" })(
+        _E9("div")(
+          _E9("button", { type: "button", class: "btn btn-sm btn-danger" }, [_l21('click-prevent', function() { $update.$ = {}, $currentTask.$ = false })])(
+            _E9("span", { class: "btn-close d-block btn-close-white ratio ratio-1x1", style: "width:0.375em;" })()
+          )
+        ),
+        _E9("div")(
+          _E9("div", { class: "h1 d-inline" })(
+            _E9("span", { class: "text-success" })(
+              _x2(/*r1.$*/$rights)
+            ),
+            _t3(" / "),
+            _E9("span", { class: "text-danger" })(
+              _x2(/*r2.$*/_$1([$totals], (_$0) => (_$0[0] && SCHEMA[classId].tasks[taskId].errors.length)))
+            ),
+            _t3(" / "),
+            _x2(/*r1.$*/$totals)
+          )
+        )
+      ),
+      _E9("div", { class: "position-relative flex-fill text-white p-3 d-flex justify-content-center align-items-center", "style-background-color": "#3A6C51", "style-font-size": "2em" })(
+        _x2(/*r1.$*/$sample),
+        _t3(" = "),
+        _x2(/*r1.$*/$result)
+      )
+    ),
+    _E9("div", { class: "flex-fill row p-1 m-0" }, [_l21('pointerdown-prevent', function(e: MouseEvent): void {
+          let el = e.target as HTMLElement
+          while (el && el.localName !== 'button') el = el.parentNode as any
+          if (el) {
+            const value = el.getAttribute('data-value')
+            const v = SCHEMA[classId].tasks[taskId]
+            if (value === READY) {
+              if ($result.$) {
+                $isRight.$ = $result.$ === answer
+                if ($isRight.$) $rights.$ = ++v.right
+                else v.errors.push([sample, answer])
+                $totals.$ = ++v.total
+                $ready.$ = true
+
+                setTimeout(function() {
+                  if ($isRight.$ || !$settingsLastBadSample.$) {
+                    const v = SCHEMA[classId].tasks[taskId]
+                    const lastAnswer = answer
+                      ;[sample, answer] = v.last = fn()
+                    if (answer === lastAnswer) [sample, answer] = v.last = fn()
+                    $sample.$ = sample
+                  }
+                  $result.$ = ''
+                  if (v.total >= $settingsTotal.$) $showFinalPopup.$ = true
+                  $ready.$ = false
+                }, 875)
+              }
+            } else if (value === CLEAR) {
+              $result.$ = $result.$.slice(0, -1)
+            } else {
+              $result.$ += value
+            }
+          }
+        })])(
+      (
+          _btn(7), _btn(8), _btn(9),
+          _btn(4), _btn(5), _btn(6),
+          _btn(1), _btn(2), _btn(3),
+          _btn('-'), _btn(0), _btn('.'),
+          _btn(CLEAR, 6, 'btn-outline-danger'), _btn(READY, 6, 'btn-outline-success')
+        )
+    )
+  )
+
+  
   )
 
   ;(
