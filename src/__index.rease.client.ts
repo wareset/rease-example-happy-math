@@ -200,7 +200,7 @@ function App(
                     $result.$ = ''
                     if (v.total >= $settingsTotal.$) $showFinalPopup.$ = true
                     $ready.$ = false
-                  }, 375)
+                  }, 875)
                 }
               } else if (value === CLEAR) {
                 $result.$ = $result.$.slice(0, -1)
