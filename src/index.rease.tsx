@@ -44,7 +44,7 @@ function App(
   }
   resize(), listen(window, 'resize', resize)
 
-  const $settingsTotal = subject<number>(15)
+  const $settingsTotal = subject<number>(10)
   const $settingsLastBadSample = subject<boolean>(true)
   const $showSettings = subject<boolean>(false)
   const $showFinalPopup = subject<boolean>(false)
@@ -311,7 +311,7 @@ function App(
               <input type="number" class="form-control"
                 id="settings-input"
                 value={$settingsTotal!!}
-                placeholder="не менее 10"
+                placeholder="не менее 5"
                 r-on-change={function(e: any) { $settingsTotal.$ = max(5, round(+e.target.value || 0)) }}
               />
             </div>

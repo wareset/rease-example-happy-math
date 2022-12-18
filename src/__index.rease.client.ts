@@ -58,7 +58,7 @@ function App(
   }
   resize(), listen(window, 'resize', resize)
 
-  const $settingsTotal = subject<number>(15)
+  const $settingsTotal = subject<number>(10)
   const $settingsLastBadSample = subject<boolean>(true)
   const $showSettings = subject<boolean>(false)
   const $showFinalPopup = subject<boolean>(false)
@@ -245,7 +245,7 @@ function App(
             _E9("label", { for: "settings-input", class: "form-label" })(
               _t3("Количество решаемых примеров:")
             ),
-            _E9("input", { type: "number", class: "form-control", id: "settings-input", value: /*r1.$*/$settingsTotal, placeholder: "не менее 10" }, [_l21('change', function(e: any) { $settingsTotal.$ = max(5, round(+e.target.value || 0)) })])()
+            _E9("input", { type: "number", class: "form-control", id: "settings-input", value: /*r1.$*/$settingsTotal, placeholder: "не менее 5" }, [_l21('change', function(e: any) { $settingsTotal.$ = max(5, round(+e.target.value || 0)) })])()
           ),
           _E9("div", { class: "form-check form-switch pt-3" })(
             _E9("input", { class: "form-check-input", type: "checkbox", role: "switch", id: "settings-check", checked: /*r1.$*/$settingsLastBadSample }, [_l21('change', function() { $settingsLastBadSample.$ = !$settingsLastBadSample.$ })])(),
