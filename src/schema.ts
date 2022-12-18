@@ -8,7 +8,7 @@ function fnSumFactory(max: number) {
   }
 }
 
-function fnDifFactory(max: number) {
+function fnSubFactory(max: number) {
   return function(): [string, string] {
     let n1 = randomTo(1, max)
     let n2 = randomTo(1, max)
@@ -17,7 +17,7 @@ function fnDifFactory(max: number) {
   }
 }
 
-function fnSumOrDifFactory(max: number) {
+function fnSumOrSubFactory(max: number) {
   return function(): [string, string] {
     let n1 = randomTo(1, max)
     let n2 = randomTo(1, max)
@@ -31,7 +31,7 @@ function fnSumOrDifFactory(max: number) {
 }
 
 function _fixBrts(n: number): number | string { return n < 0 ? `(−${-n})` : n }
-function fnSumOrDifFactoryAdv(max: number) {
+function fnSumOrSubFactoryAdv(max: number) {
   return function(): [string, string] {
     const n1 = randomTo(-max, max)
     const n2 = randomTo(-max, max)
@@ -146,7 +146,7 @@ function fnChainBracketsFactory(max: number) {
 
 export const SCHEMA = [
   {
-    head : 'Первый',
+    head : 'Сложение и вычитание',
     tasks: [
       {
         title: 'Сложение чисел до 10',
@@ -154,11 +154,11 @@ export const SCHEMA = [
       },
       {
         title: 'Вычитание чисел до 10',
-        fn   : fnDifFactory(10)
+        fn   : fnSubFactory(10)
       },
       {
         title: 'Сложение или вычитание чисел до 10',
-        fn   : fnSumOrDifFactory(10)
+        fn   : fnSumOrSubFactory(10)
       },
 
       { title: '' },
@@ -169,11 +169,11 @@ export const SCHEMA = [
       },
       {
         title: 'Вычитание чисел до 20',
-        fn   : fnDifFactory(20)
+        fn   : fnSubFactory(20)
       },
       {
         title: 'Сложение или вычитание чисел до 20',
-        fn   : fnSumOrDifFactory(20)
+        fn   : fnSumOrSubFactory(20)
       },
 
       { title: '' },
@@ -191,7 +191,7 @@ export const SCHEMA = [
 
       {
         title: 'КОНТРОЛЬНАЯ РАБОТА №1',
-        fn   : () => (random() < 0.25 ? fnSumOrDifFactory(20)
+        fn   : () => (random() < 0.25 ? fnSumOrSubFactory(20)
           : random() < 0.33 ? fnChainFactory(20) : fnChainBracketsFactory(20))()
       },
 
@@ -203,11 +203,11 @@ export const SCHEMA = [
       },
       {
         title: 'Вычитание чисел до 50',
-        fn   : fnDifFactory(50)
+        fn   : fnSubFactory(50)
       },
       {
         title: 'Сложение или вычитание чисел до 50',
-        fn   : fnSumOrDifFactory(50)
+        fn   : fnSumOrSubFactory(50)
       },
 
       { title: '' },
@@ -225,7 +225,7 @@ export const SCHEMA = [
 
       {
         title: 'КОНТРОЛЬНАЯ РАБОТА №2',
-        fn   : () => (random() < 0.25 ? fnSumOrDifFactory(50)
+        fn   : () => (random() < 0.25 ? fnSumOrSubFactory(50)
           : random() < 0.33 ? fnChainFactory(50) : fnChainBracketsFactory(50))()
       },
 
@@ -233,7 +233,7 @@ export const SCHEMA = [
 
       {
         title: 'Сложение или вычитание чисел до 100',
-        fn   : fnSumOrDifFactory(100)
+        fn   : fnSumOrSubFactory(100)
       },
       {
         title: 'Цепочки чисел до 100',
@@ -247,7 +247,7 @@ export const SCHEMA = [
 
       {
         title: 'КОНТРОЛЬНАЯ РАБОТА №3',
-        fn   : () => (random() < 0.25 ? fnSumOrDifFactory(500)
+        fn   : () => (random() < 0.25 ? fnSumOrSubFactory(500)
           : random() < 0.33 ? fnChainFactory(500) : fnChainBracketsFactory(500))()
       },
       
@@ -255,17 +255,17 @@ export const SCHEMA = [
 
       {
         title: 'Сложение или вычитание чисел до 1000',
-        fn   : fnSumOrDifFactory(1000)
+        fn   : fnSumOrSubFactory(1000)
       },
       {
         title: 'Сложение или вычитание чисел до 10000',
-        fn   : fnSumOrDifFactory(10000)
+        fn   : fnSumOrSubFactory(10000)
       },
 
     ]
   },
   {
-    head : 'Второй',
+    head : 'Умножение и деление',
     tasks: [
       {
         title: 'Умножение чисел (Таблица умножения)',
@@ -346,32 +346,32 @@ export const SCHEMA = [
     ]
   },
   {
-    head : 'Третий',
+    head : 'Отрицательные числа',
     tasks: [
       {
         title: 'Сложение и вычитание чисел до 10',
-        fn   : fnSumOrDifFactoryAdv(10)
+        fn   : fnSumOrSubFactoryAdv(10)
       },
       {
         title: 'Сложение и вычитание чисел до 20',
-        fn   : fnSumOrDifFactoryAdv(20)
+        fn   : fnSumOrSubFactoryAdv(20)
       },
       {
         title: 'Сложение и вычитание чисел до 50',
-        fn   : fnSumOrDifFactoryAdv(50)
+        fn   : fnSumOrSubFactoryAdv(50)
       },
       { title: '' },
       {
         title: 'Сложение и вычитание чисел до 100',
-        fn   : fnSumOrDifFactoryAdv(100)
+        fn   : fnSumOrSubFactoryAdv(100)
       },
       {
         title: 'Сложение и вычитание чисел до 1000',
-        fn   : fnSumOrDifFactoryAdv(1000)
+        fn   : fnSumOrSubFactoryAdv(1000)
       },
       {
         title: 'Сложение и вычитание чисел до 10000',
-        fn   : fnSumOrDifFactoryAdv(10000)
+        fn   : fnSumOrSubFactoryAdv(10000)
       },
     ]
   }

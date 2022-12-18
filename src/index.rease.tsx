@@ -49,6 +49,8 @@ function App(
   const $showSettings = subject<boolean>(false)
   const $showFinalPopup = subject<boolean>(false)
 
+  let taskNumber = 0
+
   ;(
     <div
       class="text-bg-primary2 d-none2"
@@ -78,10 +80,11 @@ function App(
           // class-d-none={$currentTask!!}
         >
           <div class="accordion">
-            <r-void r-is={
+            <r-void r-is={(
+              taskNumber = 0,
               SCHEMA.forEach(function(v, _classId) {
                 <AccordionItem>
-                  <span r-slot="head">{v.head} класс</span>
+                  <span r-slot="head">{v.head}</span>
                   <div r-slot="body" class="px-3 py-2">
                     <r-void r-is={
                       v.tasks.forEach(function(v, _taskId) {
@@ -112,7 +115,7 @@ function App(
                               <div class="row">
                                 <div class="col d-flex align-items-center">
                                   <small>
-                                    <small>{_taskId + 1}.</small> {v.title}
+                                    <small>{++taskNumber}.</small> {v.title}
                                   </small>
                                 </div>
                                 <div class="col-auto d-flex align-items-center">
@@ -137,7 +140,7 @@ function App(
                   </div>
                 </AccordionItem>
               })
-            }/>
+            )}/>
           </div>
         </div>
       </div>
@@ -345,7 +348,7 @@ function App(
           <div class="modal-dialog modal-dialog-scrollable modal-dialog-centered">
             <div class="modal-content">
               <div class="modal-header justify-content-center align-items-center flex-column">
-                <h3>{SCHEMA[classId].head} класс</h3>
+                <h3>{SCHEMA[classId].head}</h3>
                 <big>
                   <small>{taskId + 1}.</small> {v.title}
                 </big>

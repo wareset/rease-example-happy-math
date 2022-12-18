@@ -62,6 +62,8 @@ function App(
   const $showSettings = subject<boolean>(false)
   const $showFinalPopup = subject<boolean>(false)
 
+  let taskNumber = 0
+
   ;(
       _E9("div", { class: "text-bg-primary2 d-none2", "style-height": /*r2.$*/_$1([$innerHeight], (_$0) => (_$0[0] * 0.375 + 'px')), "style-background": logobg })(
     _E9("div", { class: "position-absolute top-0 end-0 p-2" })(
@@ -78,11 +80,12 @@ function App(
     _E9("div", { class: "position-absolute w-100 h-100 top-0 start-0 overflow-auto" })(
       _E9("div", { class: "container py-3" })(
         _E9("div", { class: "accordion" })(
-          SCHEMA.forEach(function(v, _classId) {
+          (
+              taskNumber = 0,
+              SCHEMA.forEach(function(v, _classId) {
                             _C7(AccordionItem)([
               ["head", () => { _E9("span")(
-                _x2(v.head),
-                _t3(" класс")
+                _x2(v.head)
               ) }],
               ["body", () => { _E9("div", { class: "px-3 py-2" })(
                 v.tasks.forEach(function(v, _taskId) {
@@ -108,7 +111,7 @@ function App(
                         _E9("div", { class: "col d-flex align-items-center" })(
                           _E9("small")(
                             _E9("small")(
-                              _x2(_taskId + 1),
+                              _x2(++taskNumber),
                               _t3(".")
                             ),
                             _t3(" "),
@@ -141,6 +144,7 @@ function App(
             ])
 
               })
+            )
         )
       )
     )
@@ -276,8 +280,7 @@ function App(
         _E9("div", { class: "modal-content" })(
           _E9("div", { class: "modal-header justify-content-center align-items-center flex-column" })(
             _E9("h3")(
-              _x2(SCHEMA[classId].head),
-              _t3(" класс")
+              _x2(SCHEMA[classId].head)
             ),
             _E9("big")(
               _E9("small")(
